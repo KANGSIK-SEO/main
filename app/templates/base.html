@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}책마루{% endblock %}</title>
+    <style>
+      body { font-family: system-ui, sans-serif; max-width: 900px; margin: 2rem auto; padding: 0 1rem; color: #222; }
+      nav { display: flex; gap: 1rem; align-items: center; border-bottom: 1px solid #ddd; padding-bottom: 1rem; }
+      nav form { margin-left: auto; } main { margin-top: 2rem; }
+      section, article { border: 1px solid #ddd; border-radius: 8px; padding: 1rem; margin: 1rem 0; }
+      label { display: block; margin: .7rem 0; } input { padding: .5rem; }
+      button { padding: .45rem .8rem; cursor: pointer; } .error { color: #b42318; }
+      .muted { color: #666; }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="/">책마루</a>
+      {% if request.session.get("user_id") %}
+        <a href="/library/books">도서 목록</a>
+        <a href="/library/loans">내 대여 내역</a>
+        <form action="/logout" method="post"><button type="submit">로그아웃</button></form>
+      {% else %}
+        <a href="/login">로그인</a>
+        <a href="/register">회원가입</a>
+      {% endif %}
+    </nav>
+    <main>{% block content %}{% endblock %}</main>
+  </body>
+</html>

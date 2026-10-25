@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}회원가입 | 책마루{% endblock %}
+{% block content %}
+  <h1>회원가입</h1>
+  {% if error %}<p class="error">{{ error }}</p>{% endif %}
+  <form action="/register" method="post">
+    <label>아이디 (3~50자) <input name="username" required minlength="3" maxlength="50" autocomplete="username"></label>
+    <label>비밀번호 (8자 이상) <input name="password" type="password" required minlength="8" autocomplete="new-password"></label>
+    <button type="submit">가입하고 로그인</button>
+  </form>
+{% endblock %}

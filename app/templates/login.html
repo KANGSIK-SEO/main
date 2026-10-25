@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}로그인 | 책마루{% endblock %}
+{% block content %}
+  <h1>로그인</h1>
+  {% if error %}<p class="error">{{ error }}</p>{% endif %}
+  <form action="/login" method="post">
+    <label>아이디 <input name="username" required autocomplete="username"></label>
+    <label>비밀번호 <input name="password" type="password" required autocomplete="current-password"></label>
+    <button type="submit">로그인</button>
+  </form>
+  <p><a href="/register">회원가입</a></p>
+{% endblock %}

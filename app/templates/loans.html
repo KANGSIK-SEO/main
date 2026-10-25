@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}내 대여 내역 | 책마루{% endblock %}
+{% block content %}
+  <h1>내 대여 내역</h1>
+  <p>{{ user.username }}님의 도서 대여 기록입니다.</p>
+  {% if error %}<p class="error">{{ error }}</p>{% endif %}
+  {% for loan in loans %}
+    <article>
+      <strong>{{ loan.book.title }}</strong> — {{ loan.book.author }}
+      <p>대여자: {{ loan.user.username }} · 대여일: {{ loan.borrowed_at.strftime("%Y-%m-%d %H:%M") }}</p>
+      <p>상태: <strong>{{ "대여 중" if loan.status == "borrowed" else "반납 완료" }}</strong>
+      {% if loan.returned_at %} · 반납일: {{ loan.returned_at.strftime("%Y-%m-%d %H:%M") }}{% endif %}</p>
+      {% if loan.status == "borrowed" %}
+        <form action="/library/loans/{{ loan.id }}/return" method="post">
+          <button type="submit">반납 완료 처리</button>
+        </form>
+      {% endif %}
+    </article>
+  {% else %}
+    <p>아직 대여한 도서가 없습니다. <a href="/library/books">도서 목록</a>에서 대여해 보세요.</p>
+  {% endfor %}
+{% endblock %}

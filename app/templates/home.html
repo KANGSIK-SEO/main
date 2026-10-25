@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>책마루 도서 대여 서비스</h1>
+  <p>도서를 등록하고 대여한 뒤, 반납 상태와 대여 이력을 관리할 수 있습니다.</p>
+  {% if request.session.get("user_id") %}
+    <p><a href="/library/books">도서 서비스로 이동</a></p>
+  {% else %}
+    <p><a href="/login">로그인</a>하거나 <a href="/register">회원가입</a>해 시작하세요.</p>
+  {% endif %}
+{% endblock %}

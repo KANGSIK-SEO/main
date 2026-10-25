@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}도서 목록 | 책마루{% endblock %}
+{% block content %}
+  <h1>도서 목록</h1>
+  <p>{{ user.username }}님, 도서를 선택해 대여하거나 새 도서를 등록하세요.</p>
+  {% if error %}<p class="error">{{ error }}</p>{% endif %}
+  <section>
+    <h2>도서 등록</h2>
+    <form action="/library/books" method="post">
+      <label>제목 <input name="title" required maxlength="200"></label>
+      <label>저자 <input name="author" required maxlength="120"></label>
+      <button type="submit">등록</button>
+    </form>
+  </section>
+  <h2>등록된 도서</h2>
+  {% for book in books %}
+    <article>
+      <strong>{{ book.title }}</strong> — {{ book.author }}
+      {% set active_loan = book.loans | selectattr("status", "equalto", "borrowed") | first %}
+      {% if active_loan %}
+        <span class="muted">대여 중</span>
+      {% else %}
+        <form action="/library/books/{{ book.id }}/borrow" method="post" style="display:inline">
+          <button type="submit">대여하기</button>
+        </form>
+      {% endif %}
+      {% if book.loans %}<span class="muted">대여 이력 {{ book.loans | length }}건</span>{% endif %}
+    </article>
+  {% else %}
+    <p>등록된 도서가 없습니다.</p>
+  {% endfor %}
+{% endblock %}

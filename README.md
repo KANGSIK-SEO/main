@@ -34,6 +34,11 @@ uvicorn main:app --reload
 
 운영 환경에서는 반드시 충분히 무작위인 `SESSION_SECRET`을 설정하세요. 기본 키는 개발 편의용 공개 값이므로 실제 배포에 사용하면 안 됩니다. HTTPS 배포 시 `COOKIE_SECURE=true`도 설정합니다. `DATABASE_URL`로 데이터베이스 연결 문자열을 바꿀 수 있으며 기본값은 `sqlite:///./library.db`입니다.
 
+```bash
+export SESSION_SECRET="$(python -c 'import secrets; print(secrets.token_urlsafe(32))')"
+export COOKIE_SECURE=true  # HTTPS 배포에서만 활성화
+```
+
 ## 경로
 
 | 경로 | 공개 여부 | 설명 |
